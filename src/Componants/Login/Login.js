@@ -15,31 +15,33 @@ const Login = () => {
     <div className="login">
       <form onSubmit={handleSubmit}>
         <h2>Login</h2>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Username :</label>
         <input
           type="text"
           id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Password :</label>
         <input
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label htmlFor="role">Role</label>
+        <label htmlFor="role">Role :</label>
         <select
           id="role"
           value={role}
           onChange={(e) => setRole(e.target.value)}
         >
           <option value="admin">Admin</option>
-          <option value="front office">Front Office</option>
-          <option value="production employee">Production Employee</option>
+          <option value="frontoffice">Front Office</option>
+          <option value="productionemployee">Production Employee</option>
         </select>
-        <button type="submit">Login</button>
+        <div style={{ float: "right", width: "100%" }}>
+          <button type="submit">Login</button>
+        </div>
       </form>
     </div>
   );
