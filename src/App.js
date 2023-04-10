@@ -5,6 +5,7 @@ import "./App.css";
 import Login from "./Componants/Login/Login";
 import Dashboard from "./Componants/Admin/Dashboard";
 import FrontOfficeForm from "./Componants/FrontOfficeManager/FrontOffice";
+import ProductionPage from "./Componants/ProductionEmployee/ProductionEmployee";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       {/* <Login/> */}
       {/* <Dashboard/> */}
       {/* <Sidebar /> */}
-      <FrontOfficeForm />
+      {/* <FrontOfficeForm /> */}
+      <ProductionPage />
     </div>
   );
 }
