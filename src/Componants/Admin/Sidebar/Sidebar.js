@@ -22,17 +22,17 @@ function Sidebar() {
         <Sider>
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-            <Menu.Item key="1" icon={<UserOutlined />}>
-              <Link to="/">View All Customers</Link>
+            <Menu.Item key="1" icon={<DashboardOutlined />}>
+              <Link to="/">Dashboard</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<ShoppingOutlined />}>
+            <Menu.Item key="2" icon={<UserOutlined />}>
+              <Link to="/customers">View All Customers</Link>
+            </Menu.Item>
+            <Menu.Item key="3" icon={<ShoppingOutlined />}>
               <Link to="/orders">View All Orders and Progress Status</Link>
             </Menu.Item>
-            <Menu.Item key="3" icon={<ClockCircleOutlined />}>
+            <Menu.Item key="4" icon={<ClockCircleOutlined />}>
               <Link to="/tasks">View Employee Tasks and Time</Link>
-            </Menu.Item>
-            <Menu.Item key="4" icon={<DashboardOutlined />}>
-              <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
           </Menu>
         </Sider>
@@ -40,10 +40,10 @@ function Sidebar() {
           <Content style={{ margin: "16px" }}>
             <div style={{ padding: 24, minHeight: 360 }}>
               <Routes>
-                <Route path="/" element={<Customers />} />
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/customers" element={<Customers />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/tasks" element={<Tasks />} />
-                <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
             </div>
           </Content>

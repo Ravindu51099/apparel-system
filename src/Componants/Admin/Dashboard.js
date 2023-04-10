@@ -58,7 +58,7 @@ const Dashboard = () => {
             />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col span={7}>
           <Card>
             <Statistic
               title="Total Orders"
@@ -67,7 +67,7 @@ const Dashboard = () => {
             />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col span={9}>
           <Card>
             <Statistic
               title="Total Tasks"
@@ -84,12 +84,12 @@ const Dashboard = () => {
             <Customers />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col span={7}>
           <Card title="All Orders">
             <Orders />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col span={9}>
           <Card title="All Tasks">
             <Tasks />
           </Card>
@@ -97,12 +97,12 @@ const Dashboard = () => {
       </Row>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card style={{ width: 500 }}>
+        <Card style={{ width: 500, justifyContent: "center" }}>
           <h1>Dashboard</h1>
           <h2>Task Status</h2>
           <Row>
             <Progress type="circle" percent={percentageComplete} />
-            <Progress type="circle" percent={percentageOfDayPassed} />
+            {/* <Progress type="circle" percent={percentageOfDayPassed} /> */}
           </Row>
           <h2>Tasks</h2>
           <ul>
