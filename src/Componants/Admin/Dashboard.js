@@ -43,8 +43,8 @@ const Dashboard = () => {
   );
 
   // Calculate the percentage of the day that has passed
-  const percentageOfDayPassed =
-    (currentTime.diff(moment().startOf("day"), "seconds") / 86400) * 100;
+  // const percentageOfDayPassed =
+  //   (currentTime.diff(moment().startOf("day"), "seconds") / 86400) * 100; 
 
   return (
     <>
@@ -98,7 +98,6 @@ const Dashboard = () => {
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Card style={{ width: 500, justifyContent: "center" }}>
-          <h1>Dashboard</h1>
           <h2>Task Status</h2>
           <Row>
             <Progress type="circle" percent={percentageComplete} />
