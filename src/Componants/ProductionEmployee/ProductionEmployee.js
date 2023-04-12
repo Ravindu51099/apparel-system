@@ -193,7 +193,7 @@ const ProductionPage = () => {
   ];
 
   return (
-    <>
+    <div style={{padding:"20px"}}>
       <h1>Production Employee Page</h1>
       <h2>Orders</h2>
       <Table
@@ -269,7 +269,7 @@ const ProductionPage = () => {
       <Button type="primary" onClick={() => setVisible("create")}>
         Create New Task
       </Button>
-    </>
+    </div>
   );
 };
 export default ProductionPage;

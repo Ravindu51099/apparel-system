@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import React, { useState } from "react";
 import "./Login.css";
 
@@ -29,16 +30,6 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label htmlFor="role">Role :</label>
-        <select
-          id="role"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-        >
-          <option value="admin">Admin</option>
-          <option value="frontoffice">Front Office</option>
-          <option value="productionemployee">Production Employee</option>
-        </select>
         <div style={{ float: "right", width: "100%" }}>
           <button type="submit">Login</button>
         </div>
