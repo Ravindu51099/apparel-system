@@ -1,6 +1,8 @@
 import { Button } from "antd";
 import React, { useState } from "react";
 import "./Login.css";
+import Lottie from 'react-lottie';
+import jacketVideo from '../Images/jacket.mp4';
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -13,27 +15,32 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <form onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        <label htmlFor="username">Username :</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label htmlFor="password">Password :</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <div style={{ float: "right", width: "100%" }}>
-          <button type="submit">Login</button>
-        </div>
-      </form>
+    <div className="video-background">
+      <video autoPlay loop muted>
+        <source src={jacketVideo} type="video/mp4" />
+      </video>
+      <div className="login-form">
+        <form onSubmit={handleSubmit}>
+          <h2>Login</h2>
+          <label htmlFor="username">Username :</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <label htmlFor="password">Password :</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div style={{ float: "right", width: "100%" }}>
+            <button type="submit">Login</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
