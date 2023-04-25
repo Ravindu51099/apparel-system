@@ -1,7 +1,5 @@
-import { Button } from "antd";
 import React, { useState } from "react";
 import "./Login.css";
-import Lottie from 'react-lottie';
 import jacketVideo from '../Images/jacket.mp4';
 
 const Login = () => {
