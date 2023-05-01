@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
-import jacketVideo3 from "../Images/Sliding.mp4";
+import jacketVideo from "../Images/Sliding.mp4";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -37,8 +37,7 @@ const Login = () => {
   return (
     <div className="video-background">
       <video autoPlay loop muted>
-        {/* <source src={jacketVideo} type="video/mp4" /> */}
-        <source src={jacketVideo3} type="video/mp4" />
+        <source src={jacketVideo} type="video/mp4" />
       </video>
       <div className="login-form">
         <form onSubmit={handleSubmit}>
