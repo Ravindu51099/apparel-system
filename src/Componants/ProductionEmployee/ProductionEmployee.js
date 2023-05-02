@@ -7,21 +7,21 @@ const ProductionPage = () => {
   const [tasks, setTasks] = useState([
     {
       id: 1,
-      description: "Assemble Product A",
+      description: "Assemble ZerOne T-Shirts",
       status: "Pending",
       assignedTo: "John Doe",
       time: null,
     },
     {
       id: 2,
-      description: "Package Product B",
+      description: "Packing Araliya Hotel Order",
       status: "In Progress",
       assignedTo: "Jane Smith",
       time: 2.5,
     },
     {
       id: 3,
-      description: "Inspect Product C",
+      description: "Inspect The Pack Order",
       status: "Completed",
       assignedTo: "Joe Black",
       time: 1.75,
@@ -38,29 +38,37 @@ const ProductionPage = () => {
     {
       id: 1001,
       name: "Acme Inc.",
-      materialType: "Steel",
+      materialType: "180",
       quantity: 50,
+      print: "Yes",
+      size:"L",
       status: "In Progress",
     },
     {
       id: 1002,
       name: "XYZ Corporation",
-      materialType: "Aluminum",
+      materialType: "210",
       quantity: 25,
+      print: "Yes",
+      size:"S/M",
       status: "Pending",
     },
     {
       id: 1003,
       name: "ABC Corp.",
-      materialType: "Plastic",
+      materialType: "180",
       quantity: 100,
+      print: "No",
+      size:"S/M/L",
       status: "Completed",
     },
     {
       id: 1004,
       name: "Smith & Co.",
-      materialType: "Wood",
+      materialType: "220",
       quantity: 75,
+      print: "Yes",
+      size:"M/L",
       status: "In Progress",
     },
   ]);
@@ -138,24 +146,35 @@ const ProductionPage = () => {
       key: "quantity",
     },
     {
+      title: "Print Available",
+      dataIndex: "print",
+      key: "print",
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+      key: "size",
+    },
+    {
       title: "Status",
       dataIndex: "status",
       key: "status",
-    },
-    {
-      title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
-      render: (_, record) => (
-        <Button
-          type="primary"
-          onClick={() => handleTaskSelect(record)}
-          disabled={record.status !== "In Progress"}
-        >
-          Start Task
-        </Button>
-      ),
-    },
+    }
+    
+    // {
+    //   title: "Actions",
+    //   dataIndex: "actions",
+    //   key: "actions",
+    //   render: (_, record) => (
+    //     <Button
+    //       type="primary"
+    //       onClick={() => handleTaskSelect(record)}
+    //       disabled={record.status !== "In Progress"}
+    //     >
+    //       Start Task
+    //     </Button>
+    //   ),
+    // },
   ];
 
   // Define columns for the Tasks table
@@ -180,20 +199,20 @@ const ProductionPage = () => {
       dataIndex: "assignedTo",
       key: "assignedTo",
     },
-    {
-      title: "Time",
-      dataIndex: "time",
-      key: "time",
-      render: (_, record) => (
-        <Button type="primary" onClick={() => setSelectedTask(record)}>
-          Enter Time
-        </Button>
-      ),
-    },
+    // {
+    //   title: "Time",
+    //   dataIndex: "time",
+    //   key: "time",
+    //   render: (_, record) => (
+    //     <Button type="primary" onClick={() => setSelectedTask(record)}>
+    //       Enter Time
+    //     </Button>
+    //   ),
+    // },
   ];
 
   return (
-    <div style={{padding:"20px"}}>
+    <div style={{ padding: "20px" }}>
       <h1>Production Employee Page</h1>
       <h2>Orders</h2>
       <Table
@@ -234,7 +253,7 @@ const ProductionPage = () => {
           </Form.Item>
         </Form>
       </Modal>
-      <Modal
+      {/* <Modal
         title="Create New Task"
         visible={visible === "create"}
         onCancel={() => setVisible(false)}
@@ -268,7 +287,7 @@ const ProductionPage = () => {
       </Modal>
       <Button type="primary" onClick={() => setVisible("create")}>
         Create New Task
-      </Button>
+      </Button> */}
     </div>
   );
 };

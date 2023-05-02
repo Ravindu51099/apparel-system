@@ -15,17 +15,17 @@ const Dashboard = () => {
   const [tasks, setTasks] = useState([
     {
       id: 1,
-      title: "Design new website",
+      title: "Araliya Hotels Order",
       status: "In Progress",
     },
     {
       id: 2,
-      title: "Write blog post",
+      title: "ZerOne T-Shirts",
       status: "Not Started",
     },
     {
       id: 3,
-      title: "Create marketing plan",
+      title: "The Pack Order",
       status: "Completed",
     },
   ]);
@@ -44,12 +44,12 @@ const Dashboard = () => {
 
   // Calculate the percentage of the day that has passed
   // const percentageOfDayPassed =
-  //   (currentTime.diff(moment().startOf("day"), "seconds") / 86400) * 100; 
+  //   (currentTime.diff(moment().startOf("day"), "seconds") / 86400) * 100;
 
   return (
     <>
-      <Row gutter={16}>
-        <Col span={8}>
+      {/* <Row gutter={16}>
+        <Col span={12}>
           <Card>
             <Statistic
               title="Total Customers"
@@ -76,43 +76,46 @@ const Dashboard = () => {
             />
           </Card>
         </Col>
-      </Row>
+      </Row> */}
 
-      <Row gutter={16}>
-        <Col span={8}>
+      <Row gutter={20}>
+        <Col span={14}>
           <Card title="All Customers">
             <Customers />
           </Card>
         </Col>
-        <Col span={7}>
+        <Col span={10}>
           <Card title="All Orders">
             <Orders />
           </Card>
         </Col>
-        <Col span={9}>
+        <Col span={14}>
           <Card title="All Tasks">
             <Tasks />
           </Card>
         </Col>
+        <Col span={10}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Card
+              title="Task Status"
+              style={{ width: 500, justifyContent: "center" }}
+            >
+              <Row>
+                <Progress type="circle" percent={percentageComplete} />
+                {/* <Progress type="circle" percent={percentageOfDayPassed} /> */}
+              </Row>
+              <h2>Tasks</h2>
+              <ul>
+                {tasks.map((task) => (
+                  <li key={task.id}>
+                    <strong>{task.title}</strong> - {task.status}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+        </Col>
       </Row>
-
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card style={{ width: 500, justifyContent: "center" }}>
-          <h2>Task Status</h2>
-          <Row>
-            <Progress type="circle" percent={percentageComplete} />
-            {/* <Progress type="circle" percent={percentageOfDayPassed} /> */}
-          </Row>
-          <h2>Tasks</h2>
-          <ul>
-            {tasks.map((task) => (
-              <li key={task.id}>
-                <strong>{task.title}</strong> - {task.status}
-              </li>
-            ))}
-          </ul>
-        </Card>
-      </div>
 
       <Row justify="space-between" style={{ marginTop: "24px" }}>
         <Col>{currentTime.format("MMMM Do YYYY")}</Col>

@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import "./Login.css";
 import jacketVideo from "../Images/Sliding.mp4";
+import ProductionPage from "../ProductionEmployee/ProductionEmployee";
+import FrontOfficeForm from "../FrontOfficeManager/FrontOffice";
+import Sidebar from "../Admin/Sidebar/Sidebar";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [role, setRole] = useState("admin");
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(`Username: ${username}, Password: ${password}, Role: ${role}`);
-  // };
+  const [showProductionPage, setShowProductionPage] = useState(false);
+  const [showFrountOffice, setShowFrountOffice] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("http://localhost:8000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
@@ -28,11 +28,31 @@ const Login = () => {
       }
 
       const data = await response.json();
-      console.log(data); // do something with the response data
+      console.log(data.user.role);
+      if (data.user.role === "production") {
+        setShowProductionPage(true);
+      } else if(data.user.role === "frontoffice"){
+        setShowFrountOffice(true);
+      }else if(data.user.role === "admin"){
+        setShowAdmin(true);
+      } // do something with the response data
     } catch (error) {
       console.error(error);
     }
+    console.log("login");
   };
+
+  if (showProductionPage) {
+    return <ProductionPage />;
+  }
+
+  if (showFrountOffice) {
+    return <FrontOfficeForm />;
+  }
+
+  if (showAdmin) {
+    return <Sidebar />;
+  }
 
   return (
     <div className="video-background">
@@ -42,12 +62,12 @@ const Login = () => {
       <div className="login-form">
         <form onSubmit={handleSubmit}>
           <h2>Login</h2>
-          <label htmlFor="username">Username :</label>
+          <label htmlFor="email">Username :</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="password">Password :</label>
           <input

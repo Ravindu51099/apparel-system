@@ -6,7 +6,7 @@ const Tasks = () => {
     {
       id: 1,
       order: "12345",
-      task: "Design new website",
+      task: "ZerOne T-Shirts",
       employee: "John Doe",
       timeSpent: "3 hours",
       status: "Pending",
@@ -14,7 +14,7 @@ const Tasks = () => {
     {
       id: 2,
       order: "67890",
-      task: "Write blog post",
+      task: "The Pack",
       employee: "Jane Doe",
       timeSpent: "1 hour",
       status: "Completed",

@@ -106,9 +106,10 @@ const Orders = () => {
 
   return (
     <>
-      <Button type="primary" onClick={addOrder} style={{ marginBottom: 16 }}>
+    <h1>View All Orders</h1>
+      {/* <Button type="primary" onClick={addOrder} style={{ marginBottom: 16 }}>
         Add Order
-      </Button>
+      </Button> */}
       <Table columns={columns} dataSource={orders} />
 
       <Modal
