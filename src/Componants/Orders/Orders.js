@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form, Input, message } from "antd";
 
 const Orders = () => {
-  const [orders, setOrders] = useState([
-    {
-      id: 1,
-      customer: "John Doe",
-      product: "Laptop",
-      quantity: 2,
-    },
-    {
-      id: 2,
-      customer: "Jane Doe",
-      product: "Phone",
-      quantity: 3,
-    },
-  ]);
+  const [orders, setOrders] = useState([]);
 
   const [editingOrder, setEditingOrder] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const token = localStorage.getItem("token");
 
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/orders", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setOrders(data))
+      .catch((error) => console.log(error));  
+  }, []);
 
   const columns = [
     {
@@ -29,15 +30,23 @@ const Orders = () => {
     },
     {
       title: "Customer",
-      dataIndex: "customer",
+      dataIndex: "customer_id",
     },
     {
-      title: "Product",
-      dataIndex: "product",
+      title: "Material",
+      dataIndex: "material_type",
     },
     {
       title: "Quantity",
       dataIndex: "quantity",
+    },
+    {
+      title: "Print Available",
+      dataIndex: "print_available",
+    },
+    {
+      title: "Size",
+      dataIndex: "required_size",
     },
     {
       title: "Actions",

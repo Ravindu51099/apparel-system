@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import "../../../App.css";
-import Customers from "../../Customers/Customer";
+
 import Orders from "../../Orders/Orders";
 import Tasks from "../../Tasks/Tasks";
 import Dashboard from "../Dashboard";
@@ -17,7 +17,6 @@ const { Sider, Content } = Layout;
 
 function Sidebar() {
   return (
-    <Router>
       <Layout style={{ minHeight: "100vh" }}>
         <Sider>
           <div className="logo" />
@@ -39,17 +38,11 @@ function Sidebar() {
         <Layout className="site-layout">
           <Content style={{ margin: "16px" }}>
             <div style={{ padding: 24, minHeight: 360 }}>
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/customers" element={<Customers />} />
-                <Route path="/orders" element={<Orders />} />
-                <Route path="/tasks" element={<Tasks />} />
-              </Routes>
             </div>
           </Content>
         </Layout>
       </Layout>
-    </Router>
+
   );
 }
 

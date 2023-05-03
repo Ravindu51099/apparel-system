@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Button, Modal, Form, Input, Select } from "antd";
 
 const { Option } = Select;
@@ -75,17 +75,44 @@ const ProductionPage = () => {
   const [visible, setVisible] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [workTime, setWorkTime] = useState(null);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/orders", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setOrders(data))
+      .catch((error) => console.log(error));  
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/tasks", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setTasks(data))
+      .catch((error) => console.log(error));  
+  }, []);
 
   // Function to fetch tasks and orders from the server
-  const fetchData = async () => {
-    const taskResponse = await fetch("/api/tasks");
-    const taskData = await taskResponse.json();
-    setTasks(taskData);
+  // const fetchData = async () => {
+  //   const taskResponse = await fetch("/api/tasks");
+  //   const taskData = await taskResponse.json();
+  //   setTasks(taskData);
 
-    const orderResponse = await fetch("/api/orders");
-    const orderData = await orderResponse.json();
-    setOrders(orderData);
-  };
+  //   const orderResponse = await fetch("/api/orders");
+  //   const orderData = await orderResponse.json();
+  //   setOrders(orderData);
+  // };
 
   // Function to handle selecting a task
   const handleTaskSelect = (task) => {
@@ -132,13 +159,13 @@ const ProductionPage = () => {
     },
     {
       title: "Customer Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "customer_id",
+      key: "customer_id",
     },
     {
       title: "Material Type",
-      dataIndex: "materialType",
-      key: "materialType",
+      dataIndex: "material_type",
+      key: "material_type",
     },
     {
       title: "Quantity",
@@ -147,13 +174,13 @@ const ProductionPage = () => {
     },
     {
       title: "Print Available",
-      dataIndex: "print",
-      key: "print",
+      dataIndex: "print_available",
+      key: "print_available",
     },
     {
       title: "Size",
-      dataIndex: "size",
-      key: "size",
+      dataIndex: "required_size",
+      key: "required_size",
     },
     {
       title: "Status",
@@ -186,8 +213,8 @@ const ProductionPage = () => {
     },
     {
       title: "Description",
-      dataIndex: "description",
-      key: "description",
+      dataIndex: "task_name",
+      key: "task_name",
     },
     {
       title: "Status",
@@ -195,9 +222,9 @@ const ProductionPage = () => {
       key: "status",
     },
     {
-      title: "Assigned To",
-      dataIndex: "assignedTo",
-      key: "assignedTo",
+      title: "Time Spent",
+      dataIndex: "time_spent",
+      key: "time_spent",
     },
     // {
     //   title: "Time",

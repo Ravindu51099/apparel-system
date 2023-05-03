@@ -9,15 +9,23 @@ const CustomersTable = () => {
   const [form] = Form.useForm();
   const [editForm] = Form.useForm();
   const [cdata, setData] = useState([]);
+  const token = localStorage.getItem("token");
   // const [customers, setCustomers] = useState([]);
 
   // const history = useHistory();
   useEffect(() => {
-    fetch("http://localhost:8000/api/customers")
+    fetch("http://localhost:8000/api/customers", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setData(data))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error));  
   }, []);
+
 
   const columns = [
     {
@@ -32,8 +40,8 @@ const CustomersTable = () => {
     },
     {
       title: "Contact Number",
-      dataIndex: "number",
-      key: "number",
+      dataIndex: "contact",
+      key: "contact",
     },
     {
       title: "Email",
@@ -157,7 +165,7 @@ const CustomersTable = () => {
           Add Customer
         </Button> */}
       </div>
-      <Table columns={columns} dataSource={cdata} /> 
+      <Table columns={columns} dataSource={cdata} />
       {/* <Modal
         title="Add Customer"
         visible={isModalVisible}

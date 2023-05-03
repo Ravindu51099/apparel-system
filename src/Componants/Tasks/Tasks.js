@@ -1,47 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Button, Modal, Form, Input, message } from "antd";
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      order: "12345",
-      task: "ZerOne T-Shirts",
-      employee: "John Doe",
-      timeSpent: "3 hours",
-      status: "Pending",
-    },
-    {
-      id: 2,
-      order: "67890",
-      task: "The Pack",
-      employee: "Jane Doe",
-      timeSpent: "1 hour",
-      status: "Completed",
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   const [editingTask, setEditingTask] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const token = localStorage.getItem("token");
 
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/tasks", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setTasks(data))
+      .catch((error) => console.log(error));  
+  }, []);
 
   const columns = [
     {
       title: "Order",
-      dataIndex: "order",
+      dataIndex: "order_id",
     },
     {
       title: "Task",
-      dataIndex: "task",
+      dataIndex: "task_name",
     },
     {
       title: "Employee",
-      dataIndex: "employee",
+      dataIndex: "user_id",
     },
     {
       title: "Employee Time Spent on Task",
-      dataIndex: "timeSpent",
+      dataIndex: "time_spent",
     },
     {
       title: "Status",
