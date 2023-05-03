@@ -157,7 +157,7 @@ const CustomersTable = () => {
           Add Customer
         </Button> */}
       </div>
-      <Table columns={columns} dataSource={cdata} />
+      <Table columns={columns} dataSource={cdata} /> 
       {/* <Modal
         title="Add Customer"
         visible={isModalVisible}
