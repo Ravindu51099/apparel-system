@@ -8,9 +8,14 @@ const FrontOfficeForm = () => {
   const [generatedTime, setGeneratedTime] = useState("");
 
   const handleGenerateTime = () => {
-    const now = new Date();
-    const timeString = now.toLocaleTimeString();
-    setGeneratedTime(timeString);
+    window.location.href = "http://127.0.0.1:5000/";
+  };
+  const handleLogout = () => {
+    // Clear session storage
+  localStorage.clear();
+
+  // Redirect to login page
+  window.location.href = '/login';
   };
 
   const handleSubmit = (values) => {
@@ -121,6 +126,7 @@ const FrontOfficeForm = () => {
               <Button type="primary" htmlType="submit">
                 Submit
               </Button>
+              <Button onClick={handleLogout}>Logout</Button>
             </Space>
           </Col>
         </Row>

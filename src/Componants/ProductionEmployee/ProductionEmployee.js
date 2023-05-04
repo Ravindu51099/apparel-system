@@ -280,41 +280,6 @@ const ProductionPage = () => {
           </Form.Item>
         </Form>
       </Modal>
-      {/* <Modal
-        title="Create New Task"
-        visible={visible === "create"}
-        onCancel={() => setVisible(false)}
-        footer={null}
-      >
-        <Form onFinish={handleTaskSubmit}>
-          <Form.Item
-            name="description"
-            rules={[
-              { required: true, message: "Please enter task description" },
-            ]}
-          >
-            <Input placeholder="Description" />
-          </Form.Item>
-          <Form.Item
-            name="assignedTo"
-            rules={[{ required: true, message: "Please select a team member" }]}
-          >
-            <Select placeholder="Assign to">
-              {["Bob", "Alice", "Charlie"].map((name) => (
-                <Option key={name}>{name}</Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Create Task
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-      <Button type="primary" onClick={() => setVisible("create")}>
-        Create New Task
-      </Button> */}
     </div>
   );
 };
