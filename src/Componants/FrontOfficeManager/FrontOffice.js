@@ -6,21 +6,74 @@ const { Option } = Select;
 const FrontOfficeForm = () => {
   const [form] = Form.useForm();
   const [generatedTime, setGeneratedTime] = useState("");
+  const token = localStorage.getItem("token");
 
   const handleGenerateTime = () => {
     window.location.href = "http://127.0.0.1:5000/";
   };
+
   const handleLogout = () => {
     // Clear session storage
-  localStorage.clear();
+    localStorage.clear();
 
-  // Redirect to login page
-  window.location.href = '/login';
+    // Redirect to login page
+    window.location.href = "/login";
   };
 
+  // const handleSubmit = (values) => {
+  //   console.log("Form values:", values);
+  //   form.resetFields();
+  // };
   const handleSubmit = (values) => {
-    console.log("Form values:", values);
-    form.resetFields();
+    const customerData = {
+      name: values.name,
+      address: values.address,
+      email: values.email,
+      contact: values.contactNumber,
+    };
+
+    const orderData = {
+      material_type: values.materialType,
+      quantity: values.quantity,
+      print_available: values.printAvailable,
+      required_size: values.requiredSizes,
+    };
+
+    console.log(JSON.stringify(customerData));
+
+    fetch("http://localhost:8000/api/customers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(customerData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Customer created:", data);
+        orderData['customer_id'] =data.id;
+        console.log( orderData);
+        fetch('http://localhost:8000/api/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(orderData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Order created:', data);
+            form.resetFields();
+          })
+          .catch((error) => {
+            console.error('Error creating order:', error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error creating customer:", error);
+      });
   };
 
   return (
@@ -30,7 +83,7 @@ const FrontOfficeForm = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height:"100vh",
+        height: "100vh",
         background: "linear-gradient(to right, #007991, #78FFD6)",
       }}
     >

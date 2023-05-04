@@ -20,7 +20,7 @@ const Orders = () => {
     })
       .then((response) => response.json())
       .then((data) => setOrders(data))
-      .catch((error) => console.log(error));  
+      .catch((error) => console.log(error));
   }, []);
 
   const columns = [
@@ -64,11 +64,6 @@ const Orders = () => {
     },
   ];
 
-  const addOrder = () => {
-    setEditingOrder(null);
-    setIsModalVisible(true);
-  };
-
   const editOrder = (order) => {
     setEditingOrder(order);
     setIsModalVisible(true);
@@ -80,6 +75,34 @@ const Orders = () => {
     message.success("Order deleted successfully!");
   };
 
+  // const handleOk = () => {
+  //   form
+  //     .validateFields()
+  //     .then((values) => {
+  //       const newOrder = {
+  //         id: editingOrder ? editingOrder.id : orders.length + 1,
+  //         ...values,
+  //       };
+  //       if (editingOrder) {
+  //         const index = orders.findIndex((o) => o.id === editingOrder.id);
+  //         setOrders([
+  //           ...orders.slice(0, index),
+  //           newOrder,
+  //           ...orders.slice(index + 1),
+  //         ]);
+
+  //         message.success("Order updated successfully!");
+  //       } else {
+  //         setOrders([...orders, newOrder]);
+  //         message.success("Order added successfully!");
+  //       }
+  //       form.resetFields();
+  //       setIsModalVisible(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error validating fields:", error);
+  //     });
+  // };
   const handleOk = () => {
     form
       .validateFields()
@@ -88,20 +111,41 @@ const Orders = () => {
           id: editingOrder ? editingOrder.id : orders.length + 1,
           ...values,
         };
-        if (editingOrder) {
-          const index = orders.findIndex((o) => o.id === editingOrder.id);
-          setOrders([
-            ...orders.slice(0, index),
-            newOrder,
-            ...orders.slice(index + 1),
-          ]);
-          message.success("Order updated successfully!");
-        } else {
-          setOrders([...orders, newOrder]);
-          message.success("Order added successfully!");
-        }
-        form.resetFields();
-        setIsModalVisible(false);
+        console.log(editingOrder.id);
+        console.log(newOrder);
+        const requestOptions = {
+          method: editingOrder ? "PUT" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(newOrder),
+        };
+        const url = editingOrder
+          ? `http://localhost:8000/api/orders/${editingOrder.id}`
+          : "http://localhost:8000/api/orders";
+        fetch(url, requestOptions)
+          .then((response) => response.json())
+          .then((data) => {
+            if (editingOrder) {
+              const index = orders.findIndex((o) => o.id === editingOrder.id);
+              setOrders([
+                ...orders.slice(0, index),
+                data,
+                ...orders.slice(index + 1),
+              ]);
+              window.location.reload();
+              message.success("Order updated successfully!");
+            } else {
+              setOrders([...orders, data]);
+              message.success("Order added successfully!");
+            }
+            form.resetFields();
+            setIsModalVisible(false);
+          })
+          .catch((error) => {
+            console.log("Error updating order:", error);
+          });
       })
       .catch((error) => {
         console.log("Error validating fields:", error);
@@ -115,7 +159,7 @@ const Orders = () => {
 
   return (
     <>
-    <h1>View All Orders</h1>
+      <h1>View All Orders</h1>
       {/* <Button type="primary" onClick={addOrder} style={{ marginBottom: 16 }}>
         Add Order
       </Button> */}
@@ -128,34 +172,20 @@ const Orders = () => {
         onCancel={handleCancel}
       >
         <Form form={form} layout="vertical">
-          <Form.Item
-            label="Customer"
-            name="customer"
-            rules={[{ required: true, message: "Please enter customer name!" }]}
-          >
+          <Form.Item label="Customer" name="customer_id">
             <Input />
           </Form.Item>
-          <Form.Item
-            label="Product"
-            name="product"
-            rules={[{ required: true, message: "Please enter product name!" }]}
-          >
+          <Form.Item label="Material" name="material_type">
             <Input />
           </Form.Item>
-          <Form.Item
-            label="Quantity"
-            name="quantity"
-            rules={[
-              { required: true, message: "Please enter product quantity!" },
-              {
-                type: "number",
-                min: 1,
-                max: 100,
-                message: "Quantity must be between 1 and 100!",
-              },
-            ]}
-          >
+          <Form.Item label="Quantity" name="quantity">
             <Input type="number" />
+          </Form.Item>
+          <Form.Item label="Print Available" name="print_available">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Size" name="required_size">
+            <Input />
           </Form.Item>
         </Form>
       </Modal>

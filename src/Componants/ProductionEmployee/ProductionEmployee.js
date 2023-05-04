@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Modal, Form, Input } from "antd";
 
-
 const ProductionPage = () => {
   const [tasks, setTasks] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -60,7 +59,7 @@ const ProductionPage = () => {
     });
     setTasks(updatedTasks);
     setVisible(false);
-  };  
+  };
 
   // Define columns for the Orders table
   const orderColumns = [
@@ -99,8 +98,6 @@ const ProductionPage = () => {
       dataIndex: "status",
       key: "status",
     },
-
-   
   ];
 
   // Define columns for the Tasks table

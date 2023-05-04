@@ -20,7 +20,7 @@ const Tasks = () => {
     })
       .then((response) => response.json())
       .then((data) => setTasks(data))
-      .catch((error) => console.log(error));  
+      .catch((error) => console.log(error));
   }, []);
 
   const columns = [
@@ -79,13 +79,41 @@ const Tasks = () => {
     message.success("Task deleted successfully!");
   };
 
+  // const handleOk = () => {
+  //   form
+  //     .validateFields()
+  //     .then((values) => {
+  //       const newTask = {
+  //         id: editingTask ? editingTask.id : tasks.length + 1,
+  //         status: "Pending", // Add status property with initial value
+  //         ...values,
+  //       };
+  //       if (editingTask) {
+  //         const index = tasks.findIndex((t) => t.id === editingTask.id);
+  //         setTasks([
+  //           ...tasks.slice(0, index),
+  //           newTask,
+  //           ...tasks.slice(index + 1),
+  //         ]);
+  //         message.success("Task updated successfully!");
+  //       } else {
+  //         setTasks([...tasks, newTask]);
+  //         message.success("Task added successfully!");
+  //       }
+  //       form.resetFields();
+  //       setIsModalVisible(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error validating fields:", error);
+  //     });
+  // };
   const handleOk = () => {
     form
       .validateFields()
       .then((values) => {
         const newTask = {
           id: editingTask ? editingTask.id : tasks.length + 1,
-          status: "Pending", // Add status property with initial value
+          status: "Pending",
           ...values,
         };
         if (editingTask) {
@@ -95,16 +123,58 @@ const Tasks = () => {
             newTask,
             ...tasks.slice(index + 1),
           ]);
-          message.success("Task updated successfully!");
+          updateTask(newTask); // Send PUT request to update the task
         } else {
           setTasks([...tasks, newTask]);
-          message.success("Task added successfully!");
+          Taskadd(newTask); // Send POST request to add a new task
         }
         form.resetFields();
         setIsModalVisible(false);
       })
       .catch((error) => {
         console.log("Error validating fields:", error);
+      });
+  };
+
+  const updateTask = (task) => {
+    fetch(`http://localhost:8000/api/tasks/${task.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(task),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error updating task");
+        }
+        message.success("Task updated successfully!");
+      })
+      .catch((error) => {
+        console.log("Error updating task:", error);
+        message.error("Error updating task");
+      });
+  };
+
+  const Taskadd = (task) => {
+    fetch("http://localhost:8000/api/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(task),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error adding task");
+        }
+        message.success("Task added successfully!");
+      })
+      .catch((error) => {
+        console.log("Error adding task:", error);
+        message.error("Error adding task");
       });
   };
 
@@ -127,44 +197,22 @@ const Tasks = () => {
         onCancel={handleCancel}
       >
         <Form form={form} layout="vertical">
-          <Form.Item
-            label="Order"
-            name="order"
-            rules={[{ required: true, message: "Please enter order number!" }]}
-          >
+          <Form.Item label="Order" name="order_id">
             <Input />
           </Form.Item>
-          <Form.Item
-            label="Task"
-            name="task"
-            rules={[{ required: true, message: "Please enter task name!" }]}
-          >
+          <Form.Item label="Task" name="task_name">
             <Input />
           </Form.Item>
-          <Form.Item
-            label="Employee"
-            name="employee"
-            rules={[{ required: true, message: "Please enter employee name!" }]}
-          >
+          <Form.Item label="Employee" name="user_id">
             <Input />
           </Form.Item>
           <Form.Item
             label="Employee Time Spent on Task (in hours)"
-            name="employeeTimeSpentOnTask"
-            rules={[
-              {
-                required: true,
-                message: "Please enter the time spent by employee on task!",
-              },
-            ]}
+            name="time_spent"
           >
             <Input type="number" />
           </Form.Item>
-          <Form.Item
-            label="Status"
-            name="status"
-            rules={[{ required: true, message: "Please enter task status!" }]}
-          >
+          <Form.Item label="Status" name="status">
             <Input />
           </Form.Item>
         </Form>
