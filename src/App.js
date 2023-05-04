@@ -1,3 +1,24 @@
+// // import logo from "./logo.svg";
+// // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import Sidebar from "./Componants/Admin/Sidebar/Sidebar";
+// import "./App.css";
+// import Login from "./Componants/Login/Login";
+// import FrontOfficeForm from "./Componants/FrontOfficeManager/FrontOffice";
+// import ProductionPage from "./Componants/ProductionEmployee/ProductionEmployee";
+
+// function App() {
+//   return (
+//     <div>
+//       <Login/>
+//       {/* <Sidebar /> */}
+//       {/* <FrontOfficeForm /> */}
+//       {/* <ProductionPage /> */}
+//     </div>
+//   );
+// }
+
+// export default App;
+
 import React, { useState } from "react";
 import Login from "./Componants/Login/Login";
 import Sidebar from "./Componants/Admin/Sidebar/Sidebar";

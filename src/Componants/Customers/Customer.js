@@ -34,9 +34,9 @@ const CustomersTable = () => {
       key: "name",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
       title: "Contact Number",
@@ -44,9 +44,9 @@ const CustomersTable = () => {
       key: "contact",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
     },
     {
       title: "Action",
@@ -73,29 +73,9 @@ const CustomersTable = () => {
     },
   ];
 
-  const Details = [
-    {
-      key: "1",
-      name: "John Brown",
-      email: "john.brown@example.com",
-      address: "New York City",
-      number: "0778541292",
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      email: "jim.green@example.com",
-      address: "Los Angeles",
-      number: "0778812192",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      email: "joe.black@example.com",
-      address: "Chicago",
-      number: "0712981399",
-    },
-  ];
+ 
+  const newData1="";
+  const newData ="";
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -105,7 +85,7 @@ const CustomersTable = () => {
     form
       .validateFields()
       .then((values) => {
-        const newData = [...cdata, values];
+         newData = [...cdata, values];
         setData(newData);
         form.resetFields();
         setIsModalVisible(false);
@@ -121,27 +101,46 @@ const CustomersTable = () => {
   };
 
   const showEditModal = (record) => {
+
     editForm.setFieldsValue(record);
     setIsEditModalVisible(true);
   };
 
   const handleEditOk = () => {
-    editForm
-      .validateFields()
-      .then((values) => {
-        const newData = cdata.map((item) => {
-          if (item.key === values.key) {
-            return { ...item, ...values };
-          }
-          return item;
-        });
-        setData(newData);
-        editForm.resetFields();
-        setIsEditModalVisible(false);
-      })
-      .catch((info) => {
-        console.log("Validate Failed:", info);
+    editForm.validateFields().then((values) => {
+      const newData = cdata.map((item) => {
+        if (item.key === values.key) {
+          return { ...item, ...values };
+        }
+        return item;
       });
+     
+
+      
+      fetch(`http://localhost:8000/api/customers/${values.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          console.log('Data updated successfully!');
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error('There was a problem updating the data:', error);
+        });
+  
+      editForm.resetFields();
+      setIsEditModalVisible(false);
+    }).catch((info) => {
+      console.log('Validate Failed:', info);
+    });
   };
 
   const handleEditCancel = () => {
@@ -211,20 +210,32 @@ const CustomersTable = () => {
           <Form.Item
             label="Name"
             name="name"
-            rules={[{ required: true, message: "Please input customer name!" }]}
+            
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Email"
             name="email"
-            rules={[
-              { required: true, message: "Please input customer email!" },
-            ]}
+            
           >
             <Input />
           </Form.Item>
-          <Form.Item name="key" hidden>
+          <Form.Item
+            label="Number"
+            name="contact"
+           
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Address"
+            name="address"
+            
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item name="id" hidden>
             <Input />
           </Form.Item>
         </Form>

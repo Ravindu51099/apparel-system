@@ -4,6 +4,7 @@ import jacketVideo from "../Images/Sliding.mp4";
 import ProductionPage from "../ProductionEmployee/ProductionEmployee";
 import FrontOfficeForm from "../FrontOfficeManager/FrontOffice";
 import Sidebar from "../Admin/Sidebar/Sidebar";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +12,11 @@ const Login = () => {
   const [showProductionPage, setShowProductionPage] = useState(false);
   const [showFrountOffice, setShowFrountOffice] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
-
+  // const [authenticated, setauthenticated] = useState(
+  //   localStorage.setItem(localStorage.getItem("authenticated") || false)
+  // );
+  
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -28,31 +33,21 @@ const Login = () => {
       }
 
       const data = await response.json();
-      console.log(data.user.role);
-      if (data.user.role === "production") {
-        setShowProductionPage(true);
-      } else if(data.user.role === "frontoffice"){
-        setShowFrountOffice(true);
-      }else if(data.user.role === "admin"){
-        setShowAdmin(true);
-      } // do something with the response data
+
+      // const IsLoggedIn = data.user.email != null ? true : false
+      // console.log(IsLoggedIn)
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.user.role);
+      // localStorage.setItem("authenticated", true);
+      //   setauthenticated(true);
+      navigate("/"); // set location
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
     console.log("login");
   };
-
-  if (showProductionPage) {
-    return <ProductionPage />;
-  }
-
-  if (showFrountOffice) {
-    return <FrontOfficeForm />;
-  }
-
-  if (showAdmin) {
-    return <Sidebar />;
-  }
+ 
 
   return (
     <div className="video-background">
