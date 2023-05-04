@@ -1,80 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Modal, Form, Input, Select } from "antd";
+import { Table, Button, Modal, Form, Input } from "antd";
 
-const { Option } = Select;
 
 const ProductionPage = () => {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      description: "Assemble ZerOne T-Shirts",
-      status: "Pending",
-      assignedTo: "John Doe",
-      time: null,
-    },
-    {
-      id: 2,
-      description: "Packing Araliya Hotel Order",
-      status: "In Progress",
-      assignedTo: "Jane Smith",
-      time: 2.5,
-    },
-    {
-      id: 3,
-      description: "Inspect The Pack Order",
-      status: "Completed",
-      assignedTo: "Joe Black",
-      time: 1.75,
-    },
-    {
-      id: 4,
-      description: "Paint Product D",
-      status: "Pending",
-      assignedTo: "Emily White",
-      time: null,
-    },
-  ]);
-  const [orders, setOrders] = useState([
-    {
-      id: 1001,
-      name: "Acme Inc.",
-      materialType: "180",
-      quantity: 50,
-      print: "Yes",
-      size:"L",
-      status: "In Progress",
-    },
-    {
-      id: 1002,
-      name: "XYZ Corporation",
-      materialType: "210",
-      quantity: 25,
-      print: "Yes",
-      size:"S/M",
-      status: "Pending",
-    },
-    {
-      id: 1003,
-      name: "ABC Corp.",
-      materialType: "180",
-      quantity: 100,
-      print: "No",
-      size:"S/M/L",
-      status: "Completed",
-    },
-    {
-      id: 1004,
-      name: "Smith & Co.",
-      materialType: "220",
-      quantity: 75,
-      print: "Yes",
-      size:"M/L",
-      status: "In Progress",
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = "/login";
+    // window.location.reload(); // or redirect to a login page
+  };
+
+  const LogoutButton = () => {
+    return <Button onClick={handleLogout}>Logout</Button>;
+  };
+
   const [visible, setVisible] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
-  const [workTime, setWorkTime] = useState(null);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -87,7 +29,7 @@ const ProductionPage = () => {
     })
       .then((response) => response.json())
       .then((data) => setOrders(data))
-      .catch((error) => console.log(error));  
+      .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
@@ -100,25 +42,8 @@ const ProductionPage = () => {
     })
       .then((response) => response.json())
       .then((data) => setTasks(data))
-      .catch((error) => console.log(error));  
+      .catch((error) => console.log(error));
   }, []);
-
-  // Function to fetch tasks and orders from the server
-  // const fetchData = async () => {
-  //   const taskResponse = await fetch("/api/tasks");
-  //   const taskData = await taskResponse.json();
-  //   setTasks(taskData);
-
-  //   const orderResponse = await fetch("/api/orders");
-  //   const orderData = await orderResponse.json();
-  //   setOrders(orderData);
-  // };
-
-  // Function to handle selecting a task
-  const handleTaskSelect = (task) => {
-    setSelectedTask(task);
-    setVisible("task");
-  };
 
   // Function to handle submitting work time
   const handleTimeSubmit = (values) => {
@@ -135,20 +60,7 @@ const ProductionPage = () => {
     });
     setTasks(updatedTasks);
     setVisible(false);
-  };
-
-  // Function to handle submitting a new task
-  const handleTaskSubmit = (values) => {
-    const newTask = {
-      id: tasks.length + 1,
-      description: values.description,
-      status: "Not Started",
-      assignedTo: values.assignedTo,
-      time: 0,
-    };
-    setTasks([...tasks, newTask]);
-    setVisible(false);
-  };
+  };  
 
   // Define columns for the Orders table
   const orderColumns = [
@@ -186,22 +98,9 @@ const ProductionPage = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-    }
-    
-    // {
-    //   title: "Actions",
-    //   dataIndex: "actions",
-    //   key: "actions",
-    //   render: (_, record) => (
-    //     <Button
-    //       type="primary"
-    //       onClick={() => handleTaskSelect(record)}
-    //       disabled={record.status !== "In Progress"}
-    //     >
-    //       Start Task
-    //     </Button>
-    //   ),
-    // },
+    },
+
+   
   ];
 
   // Define columns for the Tasks table
@@ -226,16 +125,6 @@ const ProductionPage = () => {
       dataIndex: "time_spent",
       key: "time_spent",
     },
-    // {
-    //   title: "Time",
-    //   dataIndex: "time",
-    //   key: "time",
-    //   render: (_, record) => (
-    //     <Button type="primary" onClick={() => setSelectedTask(record)}>
-    //       Enter Time
-    //     </Button>
-    //   ),
-    // },
   ];
 
   return (
@@ -280,6 +169,9 @@ const ProductionPage = () => {
           </Form.Item>
         </Form>
       </Modal>
+      <div style={{ marginBottom: 16 }}>
+        <LogoutButton />
+      </div>
     </div>
   );
 };

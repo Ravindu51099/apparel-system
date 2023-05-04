@@ -5,6 +5,7 @@ import {
   ShoppingOutlined,
   ClockCircleOutlined,
   DashboardOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import "../../../App.css";
@@ -16,6 +17,13 @@ import Dashboard from "../Dashboard";
 const { Sider, Content } = Layout;
 
 function Sidebar() {
+ 
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = '/login';
+  };
+
   return (
       <Layout style={{ minHeight: "100vh" }}>
         <Sider>
@@ -33,6 +41,9 @@ function Sidebar() {
             <Menu.Item key="4" icon={<ClockCircleOutlined />}>
               <Link to="/tasks">View Employee Tasks and Time</Link>
             </Menu.Item>
+            <Menu.Item key="5" icon={<LogoutOutlined />} onClick={handleLogout}>
+              Logout
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout className="site-layout">
@@ -42,7 +53,6 @@ function Sidebar() {
           </Content>
         </Layout>
       </Layout>
-
   );
 }
 
